@@ -101,10 +101,10 @@ async function handleCheckoutCompleted(
     return;
   }
 
-  const subscription = await stripe.subscriptions.retrieve(subscriptionId) as unknown as Stripe.Subscription;
-  const currentPeriodEnd = subscription.current_period_end
-    ? new Date(subscription.current_period_end * 1000).toISOString()
-    : null;
+  const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const periodEnd = (subscription as any).current_period_end as number | undefined;
+  const currentPeriodEnd = periodEnd ? new Date(periodEnd * 1000).toISOString() : null;
 
   const { error: entError } = await supabase.from("entitlements").upsert(
     {
@@ -152,10 +152,9 @@ async function handleSubscriptionUpsert(
     return;
   }
 
-  const currentPeriodEnd =
-    subscription.current_period_end
-      ? new Date(subscription.current_period_end * 1000).toISOString()
-      : null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const periodEnd = (subscription as any).current_period_end as number | undefined;
+  const currentPeriodEnd = periodEnd ? new Date(periodEnd * 1000).toISOString() : null;
 
   const { error } = await supabase.from("entitlements").upsert(
     {
