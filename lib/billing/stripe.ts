@@ -17,7 +17,7 @@ export const stripe = new Stripe(secretKey);
 
 const baseUrl =
   mode === "sandbox"
-    ? "http://localhost:3000"
+    ? (process.env.APP_BASE_URL ?? "http://localhost:3000")
     : process.env.APP_BASE_URL!;
 
 export const stripeConfig = {
