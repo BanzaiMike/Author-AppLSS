@@ -101,7 +101,7 @@ async function handleCheckoutCompleted(
     return;
   }
 
-  const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+  const subscription = await stripe.subscriptions.retrieve(subscriptionId) as unknown as Stripe.Subscription;
   const currentPeriodEnd = subscription.current_period_end
     ? new Date(subscription.current_period_end * 1000).toISOString()
     : null;

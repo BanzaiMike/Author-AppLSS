@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import Stripe from "stripe";
 import { getCurrentUser } from "@/lib/auth";
 import { createClient } from "@/lib/auth/server";
 import { stripe, stripeConfig } from "@/lib/billing/stripe";
@@ -31,7 +32,7 @@ export async function POST() {
     .eq("user_id", user.id)
     .maybeSingle();
 
-  const sessionParams: Parameters<typeof stripe.checkout.sessions.create>[0] =
+  const sessionParams: Stripe.Checkout.SessionCreateParams =
     {
       mode: "subscription",
       line_items: [{ price: stripeConfig.priceId, quantity: 1 }],
