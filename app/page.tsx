@@ -76,7 +76,7 @@ export default async function StartPage({
       )}
 
       {/* Core content */}
-      <main className="flex flex-1 items-center justify-center px-6 py-20">
+      <main className="flex flex-1 items-start justify-center px-6 pt-12 pb-20">
         <div className="w-full max-w-3xl flex flex-col gap-8">
 
           {/* Headline block */}
